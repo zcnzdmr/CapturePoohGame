@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     var counter = 11
     var timeUp = false
     var timer = Timer()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +28,6 @@ class ViewController: UIViewController {
         
         //timerLabel kısmı
         timerLabel.frame = CGRect(x: (screenWidth - 250) / 2 , y: 80, width: 250, height: 40)
-        //timerLabel.layer.borderWidth = 0.4
         timerLabel.textAlignment = .center
         timerLabel.font = UIFont.systemFont(ofSize: 30)
         timerLabel.text = "0"
@@ -51,39 +50,45 @@ class ViewController: UIViewController {
         imageView.image = UIImage(named: "images")
         view.addSubview(imageView)
         
-        
-        
+        timerFonk()
+    }
+    
+    func timerFonk() {
         //timer kısmı
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
-}
+    }
     
     @objc func countDown() {
         
         if timeUp == false {
             counter -= 1
             timerLabel.text = String(counter)
-        }
-        
-            if counter == 0 {
-                timer.invalidate()
-                timeUp = true
-                
-                let alert = UIAlertController(title: "Time's up", message: "Do you wanna play again", preferredStyle: .alert)
-                
-                let noAction = UIAlertAction(title: "No", style: .destructive)
-                
-                alert.addAction(noAction)
-                
-                let replay = UIAlertAction(title: "Replay", style: .default) { UIAlertAction in
-                    self.timeUp = false
-                    self.counter = 11
-                    self.countDown()
-                }
-                
-                alert.addAction(replay)
-                
-                self.present(alert, animated: true)
-            }
-            
+            control()
         }
     }
+    
+    func control() {
+        
+        if counter == 0 {
+            timer.invalidate()
+            timeUp = true
+            
+            let alert = UIAlertController(title: "Time's up", message: "Do you wanna play again", preferredStyle: .alert)
+            
+            let noAction = UIAlertAction(title: "No", style: .destructive)
+            
+            alert.addAction(noAction)
+            
+            let replay = UIAlertAction(title: "Replay", style: .default) { UIAlertAction in
+                self.timeUp = false
+                self.counter = 11
+                self.timerFonk()
+            }
+            
+            alert.addAction(replay)
+            
+            self.present(alert, animated: true)
+        }
+    }
+}
+

@@ -14,12 +14,19 @@ class ViewController: UIViewController {
     var highScoreLabel = UILabel()
     var imageView = UIImageView()
     var counter = 11
-    var timeUp = false
+    var score:Int = 0
     var timer = Timer()
+    var timer2 = Timer()
+    
+    var randomX = 136
+    var randomY = 320
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        //ekran genişliği ve uzunluğu kısmı
         let screenWidth = UIScreen.main.bounds.width
         print(screenWidth)
         let screenHeight = UIScreen.main.bounds.height
@@ -35,7 +42,7 @@ class ViewController: UIViewController {
         
         //ScoreLabel kısmı
         scoreLabel.frame = CGRect(x: (screenWidth - 250) / 2, y: 140, width: 250, height: 35)
-        scoreLabel.text = "Score :  1"
+        scoreLabel.text = "Score :  0"
         scoreLabel.textAlignment = .center
         view.addSubview(scoreLabel)
         
@@ -46,32 +53,57 @@ class ViewController: UIViewController {
         view.addSubview(highScoreLabel)
         
         //imageView kısmı
-        imageView.frame = CGRect(x: (screenWidth - 120) / 2 , y: 200, width: 120, height: 160)
+        imageView.frame = CGRect(x: randomX , y: randomY , width: 120, height: 160)
         imageView.image = UIImage(named: "images")
         view.addSubview(imageView)
         
+        imageView.isUserInteractionEnabled = true
+        let gR = UITapGestureRecognizer(target: self, action: #selector(clicked))
+        imageView.addGestureRecognizer(gR)
+        
+        //userDefaults ile kayıt kısmı
+        UserDefaults.standard.set(score, forKey: "skorSayisi")
+        
         timerFonk()
+        
+    }
+
+    @objc func clicked() {
+        score += 1
+        scoreLabel.text = "Score : \(score)"
+        print(score)
     }
     
     func timerFonk() {
         //timer kısmı
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
+        timer2 = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(randomSayi), userInfo: nil, repeats: true)
     }
+    
+    @objc func randomSayi() {
+        randomX = Int.random(in: 10...283)
+        randomY = Int.random(in: 190...600)
+        imageView.frame = CGRect(x: randomX , y: randomY , width: 120, height: 160)
+        print(randomX)
+        print(randomY)
+        if counter == 0 {
+            timer2.invalidate()
+        }
+    }
+    
     
     @objc func countDown() {
         
-        if timeUp == false {
             counter -= 1
             timerLabel.text = String(counter)
             control()
-        }
     }
     
     func control() {
         
         if counter == 0 {
             timer.invalidate()
-            timeUp = true
+            //timeUp = true
             
             let alert = UIAlertController(title: "Time's up", message: "Do you wanna play again", preferredStyle: .alert)
             
@@ -80,8 +112,8 @@ class ViewController: UIViewController {
             alert.addAction(noAction)
             
             let replay = UIAlertAction(title: "Replay", style: .default) { UIAlertAction in
-                self.timeUp = false
                 self.counter = 11
+                self.score = 0
                 self.timerFonk()
             }
             

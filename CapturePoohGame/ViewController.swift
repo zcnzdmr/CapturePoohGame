@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     
     func timerFonk() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
-        timer2 = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(randomSayi), userInfo: nil, repeats: true)
+        timer2 = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(randomSayi), userInfo: nil, repeats: true)
     }
     
     @objc func randomSayi() {

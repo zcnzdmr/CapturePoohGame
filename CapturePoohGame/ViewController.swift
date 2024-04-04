@@ -43,11 +43,13 @@ class ViewController: UIViewController {
         scoreLabel.frame = CGRect(x: (screenWidth - 250) / 2, y: 140, width: 250, height: 35)
         scoreLabel.text = "Score :  \(score)"
         scoreLabel.textAlignment = .center
+        scoreLabel.font = UIFont(name: "Bradley Hand", size: 28)
         view.addSubview(scoreLabel)
         
         //highScoreLabel kısmı
-        highScoreLabel.frame = CGRect(x: (screenWidth - 250) / 2 , y: 750, width: 250, height: 35)
+        highScoreLabel.frame = CGRect(x: (screenWidth - 250) / 2 , y: 760, width: 250, height: 35)
         highScoreLabel.text = "Highscore :  \(highScoreNumber)"
+        highScoreLabel.font = UIFont(name: "Chalkduster", size: 25)
         highScoreLabel.textAlignment = .center
         view.addSubview(highScoreLabel)
         

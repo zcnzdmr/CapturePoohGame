@@ -9,22 +9,21 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var timerLabel = UILabel()
-    var scoreLabel = UILabel()
-    var highScoreLabel = UILabel()
-    var imageView = UIImageView()
-    var counter = 11
-    var score = 0
-    var timer = Timer()
-    var timer2 = Timer()
-    var highScoreNumber = UserDefaults.standard.integer(forKey: "skorSayisi")
+    var timerLabel      = UILabel()
+    var scoreLabel      = UILabel()
+    var highScoreLabel  = UILabel()
+    var imageView       = UIImageView()
+    var counter         = 11
+    var score           = 0
+    var timer           = Timer()
+    var timer2          = Timer()
+    var highScoreNumber = UserDefaults.standard.integer(forKey: "skorSayisi") 
     
     var randomX = 136
     var randomY = 320
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         //ekran genişliği ve uzunluğu kısmı
         let screenWidth = UIScreen.main.bounds.width
@@ -61,29 +60,30 @@ class ViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
         let gR = UITapGestureRecognizer(target: self, action: #selector(clicked))
         imageView.addGestureRecognizer(gR)
-
+        
         timerFonk()
         
     }
-
+    
     @objc func clicked() {
+        
         score += 1
         scoreLabel.text = "Score : \(score)"
         if self.highScoreNumber < score {
             UserDefaults.standard.set(score, forKey: "skorSayisi")
             highScoreLabel.text = "Highscore :  \(score)"
         }
-//        let highScoreUser = UserDefaults.standard.integer(forKey: "skorSayisi")
-//    
-//        print(highScoreUser)
+        
     }
     
     func timerFonk() {
+        
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
         timer2 = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(randomSayi), userInfo: nil, repeats: true)
     }
     
     @objc func randomSayi() {
+        
         randomX = Int.random(in: 10...283)
         randomY = Int.random(in: 190...600)
         imageView.frame = CGRect(x: randomX , y: randomY , width: 120, height: 160)
@@ -92,12 +92,11 @@ class ViewController: UIViewController {
         }
     }
     
-    
     @objc func countDown() {
         
-            counter -= 1
-            timerLabel.text = String(counter)
-            control()
+        counter -= 1
+        timerLabel.text = String(counter)
+        control()
     }
     
     func control() {
